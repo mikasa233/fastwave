@@ -1,4 +1,4 @@
-#summary One-sentence summary of this page.
+#summary FastWave is designed to accelerate seismic wave modeling specially for reverse time migration and inversion that need intensive computation.
 
 = Introduction =
 FastWave is an opensource code software used for seismic wave modeling in complex media with staggered-grid finite difference method on Graphics Processing Units.
