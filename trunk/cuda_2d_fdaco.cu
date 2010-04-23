@@ -1,5 +1,7 @@
 /********************************************************************
+*  
 *  cuda_2d_fdaco.cu
+*
 *  This is an example of the CUDA program to calculate 2d acoustic 
 *  wavefield using staggered-grid finite-difference like method with
 *  PML absorbing boundary condition.
@@ -7,7 +9,8 @@
 *  Scripted by:      Long Guihua
 *  Initiated time:   2010/04/08
 *  Last modified:    2010/04/08
-*  Contact info:     longgh04@gmail.com
+*  E-mail:           longgh04@gmail.com
+*  Address:          Shenzhen Institutes of Advanced Technology, Chinese Academy of Sciences, 518055
 *
 *********************************************************************/
 
@@ -18,7 +21,7 @@
 
 #define BLOCK_DIMX 16            // tile (and threadblock) size in x
 #define BLOCK_DIMY 16            // tile (and threadblock) size in y
-#define radius 4                        // length of difference coefficients
+#define radius 4                 // length of difference coefficients
 #define PI 3.1415926            
 
 __constant__ float c_coeff[radius];
