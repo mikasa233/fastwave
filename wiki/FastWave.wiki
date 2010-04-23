@@ -4,8 +4,8 @@
 FastWave is an opensource code software used for seismic wave modeling in complex media with staggered-grid finite difference method on Graphics Processing Units. The speedup tested in a GTX295 GPU with and grid size of 1024x1024 exceeds 100x, which greatly reduce the time used to compute seismic wavefield in inversion and then accelerate the whole inversion process to almost 100 times.
 
 = Details =
-  *_Method_   : Any-order staggered-grid finite-difference implemented on GPUs using shared memory technology;
+  * *Method  *   : Any-order staggered-grid finite-difference implemented on GPUs using shared memory technology;
 
-indent *_Boundary_ : split perfectly matched boundary used for absorbing outgoing wave;
+  * *Boundary* : split perfectly matched boundary used for absorbing outgoing wave;
 
  
