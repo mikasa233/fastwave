@@ -1,0 +1,20 @@
+cuda_2d_fdaco
+=========================
+
+This is the first version of this program, you just need to change the main function to read
+velocity or density parameters from files, it can calculate acoustic wavefield in complex media. 
+
+Also, you can set staggered-grid difference coefficients with different lengths, the adaptive 
+coefficient setting will be added in the comming days.
+
+PML is used to handle absorbing boundary to simulate the infinite media that outgoing wave will
+disperse on the boundary domain without artefact reflection. 
+
+NOTICE: There is no gurantee for this program to be suited to your problem, although it can model
+almost all kinds of wave phenomena in complex acoustic media. You who downloaded this software 
+should adventure your own risk.
+
+Any bug report or modification will be welcome. Please contact
+
+Long Guihua 
+longgh04@gmail.com
