@@ -5,6 +5,7 @@ FastWave is an opensource code software used for seismic wave modeling in comple
 
 = Details =
   * *Equation*: First-order velocity-stress equation is used in modeling;
+
   * *Method*: High-order staggered-grid finite-difference is implemented on GPUs using shared memory strategy;
 
   * *Boundary*: split perfectly matched boundary is used for absorbing outgoing wave.
