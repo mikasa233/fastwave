@@ -11,7 +11,7 @@ PML is used to handle absorbing boundary to simulate the infinite media that out
 disperse on the boundary domain without artefact reflection. 
 
 NOTICE: There is no gurantee for this program to be suited to your problem, although it can model
-almost all kinds of wave phenomena in complex acoustic media. You who downloaded this software 
+almost all kinds of wave phenomena in complex acoustic media. You who download this software 
 should adventure your own risk.
 
 Any bug report or modification will be welcome. Please contact

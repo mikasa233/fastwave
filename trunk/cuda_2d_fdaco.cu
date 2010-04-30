@@ -1,7 +1,5 @@
 /********************************************************************
-*  
 *  cuda_2d_fdaco.cu
-*
 *  This is an example of the CUDA program to calculate 2d acoustic 
 *  wavefield using staggered-grid finite-difference like method with
 *  PML absorbing boundary condition.
@@ -9,8 +7,7 @@
 *  Scripted by:      Long Guihua
 *  Initiated time:   2010/04/08
 *  Last modified:    2010/04/08
-*  E-mail:           longgh04@gmail.com
-*  Address:          Shenzhen Institutes of Advanced Technology, Chinese Academy of Sciences, 518055
+*  Contact info:     longgh04@gmail.com
 *
 *********************************************************************/
 
@@ -21,7 +18,7 @@
 
 #define BLOCK_DIMX 16            // tile (and threadblock) size in x
 #define BLOCK_DIMY 16            // tile (and threadblock) size in y
-#define radius 4                 // length of difference coefficients
+#define radius 4                        // length of difference coefficients
 #define PI 3.1415926            
 
 __constant__ float c_coeff[radius];
@@ -259,6 +256,8 @@ __global__ void AddSource(int nxe, int nze, float *d_taux, float *d_tauz, float 
 		s_dtauz[threadIdx.y][threadIdx.x] = d_tauz[idx];
 		s_dsrc[threadIdx.y][threadIdx.x] = d_src[idx];
 	}
+	__syncthreads();
+
 	d_tau[idx] = s_dtaux[threadIdx.y][threadIdx.x] + s_dtauz[threadIdx.y][threadIdx.x] + s_dsrc[threadIdx.y][threadIdx.x];
 }
 
@@ -280,6 +279,8 @@ __global__ void MatMulAdd_PerElem(int nxe, int nze, float *c, float *a, float *a
 		s_b[threadIdx.y][threadIdx.x] = b[idx];
 		s_c[threadIdx.y][threadIdx.x] = c[idx];
 	}
+	__syncthreads();
+
 	c[idx] = s_a[threadIdx.y][threadIdx.x] * s_c[threadIdx.y][threadIdx.x]
 		+ s_abar[threadIdx.y][threadIdx.x] * s_b[threadIdx.y][threadIdx.x] * alpha;
 }
@@ -612,7 +613,7 @@ void forward(float t, Model model, Source sour, int *abc, float R, float tpoint,
 	int tot = NINT(t / sour.dt);
 
 	// Time point to store the wavefield snapshot
-	int tp = NINT(t / sour.dt) - 1;
+	int tp = NINT(tpoint / sour.dt) - 1;
 
 	// Source location
 	int isx = NINT(sour.sx / model.dx) + abc[0];
@@ -690,7 +691,7 @@ void forward(float t, Model model, Source sour, int *abc, float R, float tpoint,
 	free(tau); free(h_src);
 }
 
-#define row (256 - 40)
+#define row (512 - 40)
 #define col (512 - 40)
 
 int main(void)
@@ -706,9 +707,9 @@ int main(void)
 	}
 
 	// set time and boundary
-	float t = 3.0f;
-	float tp = 1.0f;
-	float R = 1.0e-3f;
+	float t = 3.5f;
+	float tp = 1.5f;
+	float R = 1.0e-6f;
 	int abc[4] = {20, 20, 20, 20};
 
 	// set model parameters
@@ -738,10 +739,8 @@ int main(void)
 	// Set source parameters
 	Source sour;
 	sour.ns = 512;
-//	sour.sx = (3 * Lx / 8 - abc[0]) * model.dx;
-//	sour.sz = (Lz / 4 - abc[1]) * model.dz;
-	sour.sx = (Lx * 1 / 2  - abc[0]) * model.dx;
-	sour.sz = (Lz * 1 / 2 - abc[1]) * model.dz * 0.0f;
+	sour.sx = (3 * Lx / 8 - abc[0]) * model.dx;
+	sour.sz = (Lz / 4 - abc[1]) * model.dz;
 	sour.dt = 0.001;
 	sour.f0 = 15.0;
 	sour.iss = 2;
