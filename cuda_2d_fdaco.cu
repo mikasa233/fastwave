@@ -37,7 +37,7 @@ __global__ void fwd_2dhb_stg_orderN(float *g_input, float *g_output, float *g_pa
 	int in_idx = iy * dimx + ix;  // index for reading input
 	
 	// update the data in shared memory in halo part
-	if (ix > radius - 1 && ix < dimx - radius && threadIdx.y < radius)  // halo above/below
+	if (ix < dimx && threadIdx.y < radius)  // halo above/below
 	{
 		s_data[threadIdx.y][tx] = g_input[in_idx - radius * dimx];
 		s_data[threadIdx.y + BLOCK_DIMY + radius][tx] = g_input[in_idx + BLOCK_DIMY * dimx];
@@ -75,7 +75,7 @@ __global__ void fwd_2dhf_stg_orderN(float *g_input, float *g_output, float *g_pa
 	int in_idx = iy * dimx + ix;  // index for reading input
 	
 	// update the data in shared memory in halo part
-	if (ix > radius - 1 && ix < dimx - radius && threadIdx.y < radius)  // halo above/below
+	if (ix < dimx && threadIdx.y < radius)  // halo above/below
 	{
 		s_data[threadIdx.y][tx] = g_input[in_idx - radius * dimx];
 		s_data[threadIdx.y + BLOCK_DIMY + radius][tx] = g_input[in_idx + BLOCK_DIMY * dimx];
@@ -120,7 +120,7 @@ __global__ void fwd_2dvb_stg_orderN(float *g_input, float *g_output, float *g_pa
 		s_data[threadIdx.y][tx] = g_input[in_idx - radius * dimx];
 		s_data[threadIdx.y + BLOCK_DIMY + radius][tx] = g_input[in_idx + BLOCK_DIMY * dimx];
 	}
-	if (iy > radius -1 && iy < dimy -radius && threadIdx.x < radius)  // halo left/right
+	if (iy < dimy && threadIdx.x < radius)  // halo left/right
 	{
 		s_data[ty][threadIdx.x] = g_input[in_idx - radius];
 		s_data[ty][threadIdx.x + BLOCK_DIMX + radius] = g_input[in_idx + BLOCK_DIMX];
@@ -158,7 +158,7 @@ __global__ void fwd_2dvf_stg_orderN(float *g_input, float *g_output, float *g_pa
 		s_data[threadIdx.y][tx] = g_input[in_idx - radius * dimx];
 		s_data[threadIdx.y + BLOCK_DIMY + radius][tx] = g_input[in_idx + BLOCK_DIMY * dimx];
 	}
-	if (iy > radius -1 && iy < dimy -radius && threadIdx.x < radius)  // halo left/right
+	if (iy < dimy && threadIdx.x < radius)  // halo left/right
 	{
 		s_data[ty][threadIdx.x] = g_input[in_idx - radius];
 		s_data[ty][threadIdx.x + BLOCK_DIMX + radius] = g_input[in_idx + BLOCK_DIMX];
